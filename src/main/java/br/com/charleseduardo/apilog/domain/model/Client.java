@@ -7,17 +7,11 @@ public class Client {
     private String phone;
 
 
-    public Client(Long id, String name, String email, String phone) {
-        this.id = id;
+    public Client(String name, String email, String phone) {
         this.name = name;
         this.email = email;
         this.phone = phone;
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
