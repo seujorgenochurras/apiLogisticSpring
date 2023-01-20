@@ -1,5 +1,6 @@
 package br.com.charleseduardo.apilog.api.exceptionhandler;
 
+import br.com.charleseduardo.apilog.domain.exception.DomainException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +8,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -36,5 +38,14 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
 
         return  handleExceptionInternal(ex,problem,headers,status, request);
+    }
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<Object> domainHandle(DomainException ex, WebRequest request){
+        var problem = new Problem();
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        problem.setTitle(ex.getMessage());
+        problem.setDateHour(LocalDateTime.now());
+
+        return handleExceptionInternal(ex, problem, new HttpHeaders(), status, request);
     }
 }

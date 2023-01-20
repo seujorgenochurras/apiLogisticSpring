@@ -2,6 +2,7 @@ package br.com.charleseduardo.apilog.api.controller;
 
 import br.com.charleseduardo.apilog.domain.model.Client;
 import br.com.charleseduardo.apilog.domain.repository.ClientRepository;
+import br.com.charleseduardo.apilog.domain.service.ClientService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +16,12 @@ import java.util.List;
 public class ClientController {
 
     private ClientRepository clientRepository;
+    private ClientService clientService;
 
-    public ClientController(ClientRepository clientRepository) {
+    public ClientController(ClientRepository clientRepository, ClientService clientService) {
         super();
         this.clientRepository = clientRepository;
+        this.clientService = clientService;
     }
 
     @GetMapping
@@ -35,7 +38,7 @@ public class ClientController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Client addClient(@Valid @RequestBody Client client){
-        return clientRepository.save(client);
+        return clientService.save(client);
 
     }
 
@@ -45,8 +48,8 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
 
-        client = clientRepository.save(client);
         client.setId(clientId);
+        client = clientService.save(client);
 
         return ResponseEntity.ok(client);
     }
@@ -58,7 +61,7 @@ public class ClientController {
             return ResponseEntity.notFound().build();
         }
 
-        clientRepository.deleteById(clientId);
+        clientService.delete(clientId);
 
         return ResponseEntity.noContent().build();
     }
