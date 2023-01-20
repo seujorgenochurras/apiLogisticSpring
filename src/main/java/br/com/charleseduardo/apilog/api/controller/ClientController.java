@@ -2,16 +2,13 @@ package br.com.charleseduardo.apilog.api.controller;
 
 import br.com.charleseduardo.apilog.domain.model.Client;
 import br.com.charleseduardo.apilog.domain.repository.ClientRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.util.Arrays;
+import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/clients")
@@ -37,13 +34,13 @@ public class ClientController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Client addClient(@RequestBody Client client){
+    public Client addClient(@Valid @RequestBody Client client){
         return clientRepository.save(client);
 
     }
 
     @PutMapping("/{clientId}")
-    public ResponseEntity<Client> updateClient(@PathVariable Long clientId, @RequestBody Client client){
+    public ResponseEntity<Client> updateClient( @PathVariable Long clientId, @Valid @RequestBody Client client){
         if (!clientRepository.existsById(clientId)) {
             return ResponseEntity.notFound().build();
         }
@@ -54,7 +51,8 @@ public class ClientController {
         return ResponseEntity.ok(client);
     }
 
-    @DeleteMapping("/{clientId}")
+    @DeleteMapping("/{clientId}"
+    )
     public ResponseEntity<Void> removeClient(@PathVariable Long clientId){
         if (!clientRepository.existsById(clientId)) {
             return ResponseEntity.notFound().build();
