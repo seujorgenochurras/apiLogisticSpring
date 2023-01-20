@@ -1,6 +1,12 @@
 package br.com.charleseduardo.apilog.domain.model;
 
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
 public class Client {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String email;
@@ -38,5 +44,18 @@ public class Client {
 
     public String getPhone() {
         return phone;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return getId().equals(client.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }
