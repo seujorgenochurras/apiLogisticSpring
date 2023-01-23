@@ -7,6 +7,7 @@ import br.com.charleseduardo.apilog.domain.model.Delivery;
 import br.com.charleseduardo.apilog.domain.model.StatusDelivery;
 import br.com.charleseduardo.apilog.domain.repository.ClientRepository;
 import br.com.charleseduardo.apilog.domain.repository.DeliveryRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +15,9 @@ import java.time.LocalDateTime;
 
 @Service
 public class RequestDeliveryService{
+    @Autowired
     private ClientService clientService;
+    @Autowired
     private DeliveryRepository deliveryRepository;
 
     @Transactional

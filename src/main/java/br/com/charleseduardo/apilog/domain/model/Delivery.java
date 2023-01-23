@@ -17,6 +17,7 @@ public class Delivery {
     private Client client;
     @Embedded
     private Recipient recipient;
+
     private BigDecimal fee;
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Enumerated(EnumType.STRING)
