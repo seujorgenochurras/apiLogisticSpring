@@ -11,6 +11,10 @@ public class ClientService {
 
     private ClientRepository clientRepository;
 
+    public  Client serchClient (Long clientId){
+     return   clientRepository.findById(clientId)
+            .orElseThrow(() -> new DomainException("client not found"));
+}
     @Transactional
     public Client save(Client client){
         boolean emailInUse = clientRepository.findByEmail(client.getEmail())
